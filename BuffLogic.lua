@@ -1,81 +1,67 @@
-function Initialize()
-end
+function Activate(id)
+    local now = tonumber(SKIN:GetMeasure("MeasureNow"):GetValue())
 
-function Activate(n)
-    local SK = SKIN
-    local now = tonumber(SK:GetMeasure("MeasureNow"):GetValue())
-
-    if n == 5 then
-        local buffEnd = tonumber(SK:GetVariable("Buff5End"))
-        local cooldownEnd = tonumber(SK:GetVariable("Cooldown5End"))
+    if id == 'W1' then
+        local buffEnd = tonumber(SKIN:GetVariable("BuffW1End"))
+        local cooldownEnd = tonumber(SKIN:GetVariable("CooldownW1End"))
         if now >= cooldownEnd and now >= buffEnd then
-            local newBuffEnd = now + 22
-            local newCooldownEnd = now + 30
-            SK:Bang('!SetVariable', "Buff5End", newBuffEnd)
-            SK:Bang('!SetVariable', "Cooldown5End", newCooldownEnd)
-            SK:Bang('!UpdateMeasure', "MeasureBuff5Diff")
-            SK:Bang('!ShowMeter', "MeterIcon5")
-            SK:Bang('!ShowMeter', "MeterText5")
-            SK:Bang('!UpdateMeter', '*')
-            SK:Bang('!Redraw')
+            local newBuffEnd = now + tonumber(SKIN:GetVariable("BuffDurationW1"))
+            local newCooldownEnd = now + tonumber(SKIN:GetVariable("CooldownDurationW1"))
+            SKIN:Bang('!SetVariable', "BuffW1End", newBuffEnd)
+            SKIN:Bang('!SetVariable', "CooldownW1End", newCooldownEnd)
+            SKIN:Bang('!UpdateMeasure', "MeasureBuffW1Diff")
         end
-    elseif n == 7 then
-        local buffEnd = tonumber(SK:GetVariable("Buff7End"))
-        local cooldownEnd = tonumber(SK:GetVariable("Cooldown7End"))
+    elseif id == 'W2' then
+        local buffEnd = tonumber(SKIN:GetVariable("BuffW2End"))
+        local cooldownEnd = tonumber(SKIN:GetVariable("CooldownW2End"))
         if now >= cooldownEnd and now >= buffEnd then
-            local newBuffEnd = now + 10
-            local newCooldownEnd = now + 60
-            SK:Bang('!SetVariable', "Buff7End", newBuffEnd)
-            SK:Bang('!SetVariable', "Cooldown7End", newCooldownEnd)
-            SK:Bang('!UpdateMeasure', "MeasureBuff7Diff")
-            SK:Bang('!ShowMeter', "MeterIcon7")
-            SK:Bang('!ShowMeter', "MeterText7")
-            SK:Bang('!UpdateMeter', '*')
-            SK:Bang('!Redraw')
+            local newBuffEnd = now + tonumber(SKIN:GetVariable("BuffDurationW2"))
+            local newCooldownEnd = now + tonumber(SKIN:GetVariable("CooldownDurationW2"))
+            SKIN:Bang('!SetVariable', "BuffW2End", newBuffEnd)
+            SKIN:Bang('!SetVariable', "CooldownW2End", newCooldownEnd)
+            SKIN:Bang('!UpdateMeasure', "MeasureBuffW2Diff")
         end
-    elseif n == 8 then
-        local buffEnd = tonumber(SK:GetVariable("Buff8End"))
-        local cooldownEnd = tonumber(SK:GetVariable("Cooldown8End"))
+    elseif id == 'W3' then
+        local buffEnd = tonumber(SKIN:GetVariable("BuffW3End"))
+        local cooldownEnd = tonumber(SKIN:GetVariable("CooldownW3End"))
         if now >= cooldownEnd and now >= buffEnd then
-            local newBuffEnd = now + 26
-            local newCooldownEnd = now + 60
-            SK:Bang('!SetVariable', "Buff8End", newBuffEnd)
-            SK:Bang('!SetVariable', "Cooldown8End", newCooldownEnd)
-            SK:Bang('!UpdateMeasure', "MeasureBuff8Diff")
-            SK:Bang('!ShowMeter', "MeterIcon8")
-            SK:Bang('!ShowMeter', "MeterText8")
-            SK:Bang('!UpdateMeter', '*')
-            SK:Bang('!Redraw')
+            local newBuffEnd = now + tonumber(SKIN:GetVariable("BuffDurationW3"))
+            local newCooldownEnd = now + tonumber(SKIN:GetVariable("CooldownDurationW3"))
+            SKIN:Bang('!SetVariable', "BuffW3End", newBuffEnd)
+            SKIN:Bang('!SetVariable', "CooldownW3End", newCooldownEnd)
+            SKIN:Bang('!UpdateMeasure', "MeasureBuffW3Diff")
         end
-    elseif n == 9 then
-        -- Não ative por aqui, use ActivateDelayed!
-        return
     else
-        local timerVar = "Timer"..n.."End"
-        local setTimerMeasure = "MeasureSetTimer"..n
-        local newEnd = tonumber(SK:GetMeasure(setTimerMeasure):GetValue())
-        SK:Bang('!SetVariable', timerVar, newEnd)
-        SK:Bang('!UpdateMeasure', "MeasureTimer"..n)
-        SK:Bang('!UpdateMeasure', "MeasureDiff"..n)
-        SK:Bang('!ShowMeter', "MeterIcon"..n)
-        SK:Bang('!ShowMeter', "MeterText"..n)
-        SK:Bang('!UpdateMeter', '*')
-        SK:Bang('!Redraw')
+        local timerVar = "Timer" .. id .. "End"
+        local setTimerMeasure = "MeasureSetTimer" .. id
+        local diffMeasure = "MeasureDiff" .. id
+        
+        local newEnd = tonumber(SKIN:GetMeasure(setTimerMeasure):GetValue())
+        SKIN:Bang('!SetVariable', timerVar, newEnd)
+        SKIN:Bang('!UpdateMeasure', diffMeasure)
     end
+    
+    SKIN:Bang('!UpdateMeter', '*')
+    SKIN:Bang('!Redraw')
 end
 
-function ActivateDelayed(n, delay)
-    local SK = SKIN
-    local now = tonumber(SK:GetMeasure("MeasureNow"):GetValue())
-    local timerVar = "Timer"..n.."End"
-    local duration = tonumber(SK:GetVariable("TimerDuration"..n))
-    SK:Bang('!SetVariable', "Skill9DelayStart", now + delay)
+function ActivateGroupW()
+    Activate('W1')
+    Activate('W2')
+    Activate('W3')
+    ActivateDelayed('W4', 4)
+end
+
+function ActivateDelayed(id, delay)
+    local now = tonumber(SKIN:GetMeasure("MeasureNow"):GetValue())
+    
+    local timerVar = "Timer" .. id .. "End"
+    local delayStartVar = "Skill" .. id .. "DelayStart"
+    local duration = tonumber(SKIN:GetVariable("TimerDuration" .. id))
+    local diffMeasure = "MeasureDiff" .. id
+
+    SKIN:Bang('!SetVariable', delayStartVar, now + delay)
     local newEnd = now + delay + duration
-    SK:Bang('!SetVariable', timerVar, newEnd)
-    SK:Bang('!UpdateMeasure', "MeasureTimer"..n)
-    SK:Bang('!UpdateMeasure', "MeasureDiff"..n)
-    SK:Bang('!HideMeter', "MeterIcon"..n)
-    SK:Bang('!HideMeter', "MeterText"..n)
-    SK:Bang('!UpdateMeter', '*')
-    SK:Bang('!Redraw')
+    SKIN:Bang('!SetVariable', timerVar, newEnd)
+    SKIN:Bang('!UpdateMeasure', diffMeasure)
 end
