@@ -20,3 +20,4 @@ Fully configurable with clear and persistent visual display of hotkey based acti
 1.  **Configuration Panel:** In the skin folder (e.g., `Documents\Rainmeter\Skins\SkillTimer`) and run **`ConfigPanel.exe`**.
 2.  **Customize Skills:** Use the panel to set timers, hotkeys, icons, and global settings like icon size and spacing. Enable or disable specific buffs as needed. Disable skills by removing hotkeys.
 3.  **Save/Load Templates:** Saving your configuration applies it to the active Rainmeter skin. Select templates from the dropdown menu.
+4.  **Skill Images** Can replace images with .PNGs. Default icon size is 56px.
