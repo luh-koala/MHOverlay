@@ -13,7 +13,7 @@ Fully configurable with clear and persistent visual display of hotkey based acti
 
 ## Installation
 
-1.  Download the latest `.rmskin` file from the [Releases](https://github.com/luh-koala/MHOverlay/releases/tag/v1.0.0)
+1.  Download the latest `.rmskin` file from the [Releases](https://github.com/luh-koala/MHOverlay/releases)
 3.  The main timer bar should load automatically on your screen.
 
 ## Usage
