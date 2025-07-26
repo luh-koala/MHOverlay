@@ -5,7 +5,7 @@ Fully configurable with clear and persistent visual display of hotkey based acti
 
 ## Features
 
-* **Customizable Buff Bar:** Track up to 5 skills and 4 signature buffs with custom icons, timers, and hotkeys.
+* **Customizable Buff Bar:** Track up to 5 skills + RightMouse and 4 signature buffs with custom icons, timers, and hotkeys.
 * **Skill Ready Indicator:** Icon glow or flash when their cooldown is complete.
 * **ConfigPanel:** Easy customization of appereance, timers and cooldowns without needing to manually edit `.ini` files.
 * **Profiles (Templates):** Create and load different templates for various hero builds or personal setups.
